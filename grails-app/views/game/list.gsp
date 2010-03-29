@@ -5,7 +5,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name="layout" content="main" />
         <g:set var="entityName" value="${message(code: 'game.label', default: 'Game')}" />
-        <title><g:message code="default.list.label" args="[entityName]" /></title>
+        <title>WiiDB</title>
     </head>
     <body>
         <div class="nav">
@@ -17,41 +17,58 @@
             <g:if test="${flash.message}">
             <div class="message">${flash.message}</div>
             </g:if>
+
+            <g:form method="get">
+            <div class="filters">
+              Min. Players 
+              <g:select from="['1', '2', '3', '4']" noSelection="${['':'']}" name="minPlayers" value="${params.minPlayers}" />
+              
+              Genre
+              <g:select from="${de.arturh.wiidb.Genre.list()}" noSelection="${['':'']}" name="genre" value="${params.genre}" optionKey="id" />
+
+              Region
+              <g:select from="${de.arturh.wiidb.Game.list().region.unique()}" noSelection="${['':'']}" name="region" value="${params.genre}"  />
+
+              With Device
+              <g:select from="${de.arturh.wiidb.Device.list().deviceType.unique()}" noSelection="${['':'']}" name="withDevice" value="${params.withDevice}"  />
+
+              Without Device
+              <g:select from="${de.arturh.wiidb.Device.list().deviceType.unique()}" noSelection="${['':'']}" name="withoutDevice" value="${params.withoutDevice}"  />
+
+              <g:actionSubmit action="list" value="update" label="Update" />
+            </div>
+
+            </g:form>
+
             <div class="list">
+                ${gameInstanceTotal} games:
+                <g:each in="${gameInstanceList}" status="i" var="gameInstance">
                 <table>
-                    <thead>
-                        <tr>
-                            <g:sortableColumn property="id" title="${message(code: 'game.id.label', default: 'Id')}" />
-                            <g:sortableColumn property="wiiId" title="${message(code: 'game.wiiId.label', default: 'Wii Id')}" />
-                            <g:sortableColumn property="name" title="${message(code: 'game.name.label', default: 'Name')}" />
-                            <g:sortableColumn property="region" title="${message(code: 'game.region.label', default: 'Region')}" />
-                            <g:sortableColumn property="players" title="${message(code: 'game.players.label', default: 'Players')}" />
-                            <g:sortableColumn property="genres" title="${message(code: 'game.players.label', default: 'Players')}" />
-                        </tr>
-                    </thead>
                     <tbody>
-                    <g:each in="${gameInstanceList}" status="i" var="gameInstance">
-                        <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
-                        
-                            <td><g:link action="show" id="${gameInstance.id}">${fieldValue(bean: gameInstance, field: "id")}</g:link></td>
-                        
-                            <td>${fieldValue(bean: gameInstance, field: "wiiId")}</td>
-                        
-                            <td>${fieldValue(bean: gameInstance, field: "name")}</td>
-                        
-                            <td>${fieldValue(bean: gameInstance, field: "region")}</td>
-                        
-                            <td>${fieldValue(bean: gameInstance, field: "title")}</td>
-                        
-                            <td>${fieldValue(bean: gameInstance, field: "synopsis")}</td>
-                        
+                        <tr>
+                            <td colspan="3">
+                              <g:link action="show" id="${gameInstance.id}">
+                                ${fieldValue(bean: gameInstance, field: "name")}
+                              </g:link>
+                            </td>
                         </tr>
-                    </g:each>
+                        <tr>
+                            <td width="60"><img src="http://wiitdb.com/wiitdb/artwork/cover3D/EN/${gameInstance.wiiId}.png" alt="${gameInstance.wiiId}" width="50" /></td>
+                            <td>${fieldValue(bean: gameInstance, field: "synopsis")}</td>
+                            <td width="200">
+                              <strong>region:</strong> ${fieldValue(bean: gameInstance, field: "region")}<br/>
+                              <strong>genres:</strong> ${formatList(list: gameInstance.genres.name)}<br/>
+                              <strong>players <g:if test="${gameInstance.playersWifi? > 0}">(wifi)</g:if>:</strong> ${fieldValue(bean: gameInstance, field: "players")} <g:if test="${gameInstance.playersWifi? > 0}">(${gameInstance.playersWifi})</g:if><br/>
+                              <strong>devices:</strong> ${formatList(list: gameInstance.devices)}<br/>
+
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
+                </g:each>
             </div>
             <div class="paginateButtons">
-                <g:paginate total="${gameInstanceTotal}" />
+                <g:paginate total="${gameInstanceTotal}" params="[genre: params.genre, minPlayers: params.minPlayers, withDevice: params.withDevice, withoutDevice: params.withoutDevice, region: params.region]" />
             </div>
         </div>
     </body>

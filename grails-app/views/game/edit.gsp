@@ -182,7 +182,6 @@
                                     <g:select name="ratings" from="${de.arturh.wiidb.Rating.list()}" multiple="yes" optionKey="id" size="5" value="${gameInstance?.ratings}" />
                                 </td>
                             </tr>
-                        
                         </tbody>
                     </table>
                 </div>

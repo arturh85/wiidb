@@ -9,9 +9,10 @@ class GameController {
     }
 
     def list = {
-		def paramMax = 200
+		def paramMax = 50
 		def paramSort = 'name'
 		def paramOrder = 'asc'
+                def paramOffset = 0
 
 		if(params['sort']) {
 			paramSort = params['sort']
@@ -21,19 +22,82 @@ class GameController {
 			paramOrder = params['order']
 		}
 
-		def results = Game.createCriteria().list {
-			maxResults(paramMax)
-			order(paramSort, paramOrder)        	
+                if(params['offset']) {
+			paramOffset = params['offset']
+		}
+
+		def results = Game.createCriteria().list(offset: paramOffset) {
+                    if(params.minPlayers) {
+                        ge('players', params.minPlayers.toInteger())
+                    }
+
+                    if(params.genre) {
+                        genres {
+                            eq('id', params.genre.toLong())
+                        }
+                    }
+
+                    if(params.region) {
+                        eq('region', params.region)
+                    }
+
+                    if(params.withDevice) {
+                        devices {
+                            eq('deviceType', params.withDevice)
+                        }
+                    }
+
+                    if(params.withoutDevice) {
+                        devices {
+                            or {
+                                and {
+                                    eq('deviceType', params.withoutDevice)
+                                    eq('required', false)
+                                }
+
+                                ne('deviceType', params.withoutDevice)
+                            }
+                        }
+                    }
+
+                    maxResults(paramMax)
+                    order(paramSort, paramOrder)
 		}
 		
 		def resultCount = Game.createCriteria().count {
-			
+                    if(params.minPlayers) {
+                        ge('players', params.minPlayers.toInteger())
+                    }
+
+                    if(params.genre) {
+                        genres {
+                            eq('id', params.genre.toLong())
+                        }
+                    }
+                    if(params.withDevice) {
+                        devices {
+                            eq('deviceType', params.withDevice)
+                        }
+                    }
+
+                    if(params.withoutDevice) {
+                        devices {
+                            or {
+                                and {
+                                    eq('deviceType', params.withoutDevice)
+                                    eq('required', false)
+                                }
+
+                                ne('deviceType', params.withoutDevice)
+                            }
+                        }
+                    }
 		}
         
     	params.max = Math.min(params.max ? params.int('max') : 10, 100)
         [
          gameInstanceList: results, 
-         gameInstanceTotal: Game.count()
+         gameInstanceTotal: resultCount
         ]
     }
 
