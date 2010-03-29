@@ -16,8 +16,7 @@ class WiiTdbImporter {
 			def company = new Company()
 			company.name = it.@name
 			company.code = it.@code
-			
-			
+						
 			if(company.hasErrors()) {
 				company.errors.each {
 					println "error validating company: " + it
@@ -83,6 +82,69 @@ class WiiTdbImporter {
 					game.addToGenres(genre)
 				}
 			}
+
+			it.rating.descriptor.each {
+				def descriptor = it.toString()
+				
+				def rating = Rating.findByName(descriptor)
+				if(rating == null) {
+					rating = new Rating()
+					rating.name = descriptor
+
+					if(rating.hasErrors()) {
+						rating.errors.each {
+							println "error validating rating: " + it
+						}
+					}
+					
+					rating.save(flush: true)
+				}
+				
+				game.addToRatings(rating)
+			}
+
+			it.input.control.each {
+				def deviceType = it.@type.toString()
+				def deviceRequired = it.@required.toBoolean()
+				
+				def device = Device.findWhere(deviceType: deviceType, required: deviceRequired)
+				if(device == null) {
+					device = new Device()
+					device.deviceType = deviceType
+					device.required = deviceRequired
+
+					if(device.hasErrors()) {
+						device.errors.each {
+							println "error validating device: " + it
+						}
+					}
+					
+					device.save(flush: true)
+				}
+				
+				game.addToDevices(device)
+			}
+			
+
+			it."wi-fi".feature.each {
+				def name = it.toString()
+				
+				def wifiFeature = WifiFeature.findByName(name)
+				if(wifiFeature == null) {
+					wifiFeature = new WifiFeature()
+					wifiFeature.name = name
+
+					if(wifiFeature.hasErrors()) {
+						wifiFeature.errors.each {
+							println "error validating wifiFeature: " + it
+						}
+					}
+					
+					wifiFeature.save(flush: true)
+				}
+				
+				game.addToWifiFeatures(wifiFeature)
+			}			
 			
 			if(it.languages && it.languages.toString().size() > 0) {
 				def languages = it.languages.toString().split(",")
@@ -143,6 +205,18 @@ class WiiTdbImporter {
 		
 		def languages = Language.list()
 		log.info "${languages.size()} languages imported"
+		
+		def devices = Device.list()
+		log.info "${devices.size()} devices imported"
+		
+		def genres = Genre.list()
+		log.info "${genres.size()} genres imported"
+
+		def wifiFeatures = WifiFeature.list()
+		log.info "${wifiFeatures.size()} wifiFeatures imported"
+		
+		def ratings = Rating.list()
+		log.info "${ratings.size()} ratings imported"
 	}
 	
 	def _getCompanyByName(name) {

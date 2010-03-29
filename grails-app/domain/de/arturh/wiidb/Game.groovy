@@ -7,6 +7,7 @@ class Game {
       languages: Language,
       genres: Genre,
       devices: Device,
+      ratings: Rating,
       wifiFeatures: WifiFeature,
     ]
 
@@ -31,6 +32,7 @@ class Game {
 	Set<Language> languages
 	Set<WifiFeature> wifiFeatures
 	Set<Genre> genres
+	Set<Rating> ratings
 	Set<Device> devices
 	
     static constraints = {
@@ -64,5 +66,6 @@ class Game {
         wifiFeatures         joinTable:[name: 'gamesToWifiFeatures', key: 'gameId']
         genres               joinTable:[name: 'gamesToGenres', key: 'gameId']
         devices       		 joinTable:[name: 'gamesToDevices', key: 'gameId']
+        ratings       		 joinTable:[name: 'gamesToRatings', key: 'gameId']                      		            
 	}
 }
