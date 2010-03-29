@@ -58,7 +58,7 @@
                             <td width="200">
                               <strong>region:</strong> ${fieldValue(bean: gameInstance, field: "region")}<br/>
                               <strong>genres:</strong> ${formatList(list: gameInstance.genres.name)}<br/>
-                              <strong>players <g:if test="${gameInstance.playersWifi? > 0}">(wifi)</g:if>:</strong> ${fieldValue(bean: gameInstance, field: "players")} <g:if test="${gameInstance.playersWifi? > 0}">(${gameInstance.playersWifi})</g:if><br/>
+                              <strong>players <g:if test="${gameInstance.playersWifi && gameInstance.playersWifi > 0}">(wifi)</g:if>:</strong> ${fieldValue(bean: gameInstance, field: "players")} <g:if test="${gameInstance.playersWifi && gameInstance.playersWifi > 0}">(${gameInstance.playersWifi} )</g:if><br/>
                               <strong>devices:</strong> ${formatList(list: gameInstance.devices)}<br/>
 
                             </td>
