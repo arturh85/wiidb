@@ -60,6 +60,13 @@ class GameController {
                         }
                     }
 
+                    if(params.filter) {
+                        or {
+                            ilike('name', "%${params.filter}%")
+                            ilike('synopsis', "%${params.filter}%")
+                        }
+                    }
+
                     maxResults(paramMax)
                     order(paramSort, paramOrder)
 		}

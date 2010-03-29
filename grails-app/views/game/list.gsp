@@ -20,6 +20,9 @@
 
             <g:form method="get">
             <div class="filters">
+              Filter
+              <g:textField name="filter" value="${params.minPlayers}" />
+
               Min. Players 
               <g:select from="['1', '2', '3', '4']" noSelection="${['':'']}" name="minPlayers" value="${params.minPlayers}" />
               
@@ -27,7 +30,7 @@
               <g:select from="${de.arturh.wiidb.Genre.list()}" noSelection="${['':'']}" name="genre" value="${params.genre}" optionKey="id" />
 
               Region
-              <g:select from="${de.arturh.wiidb.Game.list().region.unique()}" noSelection="${['':'']}" name="region" value="${params.genre}"  />
+              <g:select from="${de.arturh.wiidb.Game.list().region.unique()}" noSelection="${['':'']}" name="region" value="${params.region}"  />
 
               With Device
               <g:select from="${de.arturh.wiidb.Device.list().deviceType.unique()}" noSelection="${['':'']}" name="withDevice" value="${params.withDevice}"  />
@@ -68,7 +71,7 @@
                 </g:each>
             </div>
             <div class="paginateButtons">
-                <g:paginate total="${gameInstanceTotal}" params="[genre: params.genre, minPlayers: params.minPlayers, withDevice: params.withDevice, withoutDevice: params.withoutDevice, region: params.region]" />
+                <g:paginate total="${gameInstanceTotal}" params="[genre: params.genre, minPlayers: params.minPlayers, withDevice: params.withDevice, withoutDevice: params.withoutDevice, region: params.region, filter:params.filter]" />
             </div>
         </div>
     </body>
