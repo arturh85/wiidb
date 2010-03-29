@@ -12,7 +12,7 @@ class GameController {
 		def paramMax = 50
 		def paramSort = 'name'
 		def paramOrder = 'asc'
-                def paramOffset = 0
+        def paramOffset = 0
 
 		if(params['sort']) {
 			paramSort = params['sort']
@@ -22,7 +22,7 @@ class GameController {
 			paramOrder = params['order']
 		}
 
-                if(params['offset']) {
+		if(params['offset']) {
 			paramOffset = params['offset']
 		}
 
@@ -99,6 +99,14 @@ class GameController {
                             }
                         }
                     }
+
+                    if(params.filter) {
+                        or {
+                            ilike('name', "%${params.filter}%")
+                            ilike('synopsis', "%${params.filter}%")
+                        }
+                    }
+					
 		}
         
     	params.max = Math.min(params.max ? params.int('max') : 10, 100)
