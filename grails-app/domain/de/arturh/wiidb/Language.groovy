@@ -14,6 +14,10 @@ class Language {
 	
 	Set<Game> games
 
+	String toString() {
+		return name ? name : code
+	}
+	
     static constraints = {
 		code(blank: false, unique: true)
 		name(nullable: true)

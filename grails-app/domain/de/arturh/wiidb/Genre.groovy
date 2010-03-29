@@ -14,6 +14,10 @@ class Genre {
 	
 	Set<Game> games
 
+	String toString() {
+		return name
+	}
+	
     static constraints = {
 		name(blank: false, unique: true)
     }

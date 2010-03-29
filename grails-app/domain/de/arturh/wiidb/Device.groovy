@@ -7,7 +7,10 @@ class Device {
       // many-to-many
       games: Game
     ]
-    
+
+	String toString() {
+		return deviceType + "(" + (required ? "requried" : "optional") + ")"
+	}
     
 	Long id
 	String deviceType

@@ -1,7 +1,8 @@
 package de.arturh.wiidb
 
 class Game {
-	//static searchable = true
+	static searchable = true
+	
     static hasMany = [
       // many-to-many
       languages: Language,
@@ -34,6 +35,10 @@ class Game {
 	Set<Genre> genres
 	Set<Rating> ratings
 	Set<Device> devices
+
+	String toString() {
+		return name
+	}
 	
     static constraints = {
 		wiiId(blank: false, size:6..6, unique: true)
@@ -41,7 +46,7 @@ class Game {
 		
 		region(nullable: true)
 		title(nullable: true)
-		synopsis(nullable: true)
+		synopsis(nullable: true, size: 0..4096)
 		
 		publishedOn(nullable: true)
 		ratingType(nullable: true)

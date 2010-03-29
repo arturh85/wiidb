@@ -6,6 +6,10 @@ class Company {
 	String code
 	String name
 	
+	String toString() {
+		return name
+	}
+	
     static constraints = {
 		name(blank: false, unique: true)		
 		code(nullable: true)		

@@ -5,7 +5,7 @@ class UrlMappings {
 			 // apply constraints here
 		  }
 	  }
-      "/"(view:"/index")
+      "/"(controller: 'game', action:'list')
 	  "500"(view:'/error')
 	}
 }
