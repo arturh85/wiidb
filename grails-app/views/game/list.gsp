@@ -21,7 +21,7 @@
             <g:form method="get">
             <div class="filters">
               Filter
-              <g:textField name="filter" value="${params.minPlayers}" />
+              <g:textField name="filter" value="${params.filter}" />
 
               Min. Players 
               <g:select from="['1', '2', '3', '4']" noSelection="${['':'']}" name="minPlayers" value="${params.minPlayers}" />
