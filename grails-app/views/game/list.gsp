@@ -80,7 +80,10 @@
                             <td width="200">
                               <strong>region:</strong> ${fieldValue(bean: gameInstance, field: "region")}<br/>
                               <strong>genres:</strong> ${formatList(list: gameInstance.genres.name)}<br/>
-                              <strong>players <g:if test="${gameInstance.playersWifi && gameInstance.playersWifi > 0}">(wifi)</g:if>:</strong> ${fieldValue(bean: gameInstance, field: "players")} <g:if test="${gameInstance.playersWifi && gameInstance.playersWifi > 0}">(${gameInstance.playersWifi} )</g:if><br/>
+                              <strong>players <g:if test="${gameInstance.playersWifi && gameInstance.playersWifi > 0}">(wifi)</g:if>:</strong> 
+							  ${fieldValue(bean: gameInstance, field: "players")} <g:if test="${gameInstance.playersWifi && gameInstance.playersWifi > 0}">
+								(${gameInstance.playersWifi}<g:if test="${gameInstance.wifiFeatures.size() > 0}"> ${formatList(list: gameInstance.wifiFeatures)}</g:if>)
+							  </g:if><br/>
 
                               <g:if test="${gameInstance.devices.size()}">
 								<strong>devices:</strong> ${formatList(list: gameInstance.devices)}<br/>

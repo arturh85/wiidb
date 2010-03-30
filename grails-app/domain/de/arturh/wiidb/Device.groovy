@@ -9,7 +9,7 @@ class Device {
     ]
 
 	String toString() {
-		return deviceType + "(" + (required ? "requried" : "optional") + ")"
+		return deviceType + " (" + (required ? "requried" : "optional") + ")"
 	}
     
 	Long id
