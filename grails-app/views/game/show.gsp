@@ -18,36 +18,22 @@
             <g:if test="${flash.message}">
             <div class="message">${flash.message}</div>
             </g:if>
-			<img border="0" style="float: right;" src="/WiiDB/game/image/${gameInstance.wiiId}" alt="${gameInstance.wiiId}" />
             <div class="dialog">
                 <table>
                     <tbody>
-                    
-                        <tr class="prop">
-                            <td valign="top" class="name"><g:message code="game.id.label" default="Id" /></td>
-                            
-                            <td valign="top" class="value">${fieldValue(bean: gameInstance, field: "id")}</td>
-                            
-                        </tr>
-                    
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="game.wiiId.label" default="Wii Id" /></td>
                             
                             <td valign="top" class="value">${fieldValue(bean: gameInstance, field: "wiiId")}</td>
                             
                         </tr>
-                    
+
+						<tr><td>Cover</td><td><img border="0" src="/WiiDB/game/image/${gameInstance.wiiId}" alt="${gameInstance.wiiId}" /></td></tr>
+						
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="game.name.label" default="Name" /></td>
                             
                             <td valign="top" class="value">${fieldValue(bean: gameInstance, field: "name")}</td>
-                            
-                        </tr>
-                    
-                        <tr class="prop">
-                            <td valign="top" class="name"><g:message code="game.region.label" default="Region" /></td>
-                            
-                            <td valign="top" class="value">${fieldValue(bean: gameInstance, field: "region")}</td>
                             
                         </tr>
                     
@@ -61,17 +47,30 @@
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="game.synopsis.label" default="Synopsis" /></td>
                             
-                            <td valign="top" class="value"><div style="width: 400px">${fieldValue(bean: gameInstance, field: "synopsis")}</div></td>
+                            <td valign="top" class="value">${fieldValue(bean: gameInstance, field: "synopsis")}</td>
+                            
+                        </tr>
+
+                        <tr class="prop">
+                            <td valign="top" class="name"><g:message code="game.region.label" default="Region" /></td>
+                            
+                            <td valign="top" class="value">${fieldValue(bean: gameInstance, field: "region")}</td>
+                            
+                        </tr>
+						
+                        <tr class="prop">
+                            <td valign="top" class="name"><g:message code="game.developer.label" default="Developer" /></td>
+                            
+                            <td valign="top" class="value"><g:link controller="company" action="show" id="${gameInstance?.developer?.id}">${gameInstance?.developer?.encodeAsHTML()}</g:link></td>
                             
                         </tr>
                     
                         <tr class="prop">
-                            <td valign="top" class="name"><g:message code="game.publishedOn.label" default="Published On" /></td>
+                            <td valign="top" class="name"><g:message code="game.publisher.label" default="Publisher" /></td>
                             
-                            <td valign="top" class="value"><g:formatDate date="${gameInstance?.publishedOn}" /></td>
+                            <td valign="top" class="value"><g:link controller="company" action="show" id="${gameInstance?.publisher?.id}">${gameInstance?.publisher?.encodeAsHTML()}</g:link></td>
                             
                         </tr>
-                    
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="game.ratingType.label" default="Rating Type" /></td>
                             
@@ -85,7 +84,13 @@
                             <td valign="top" class="value">${fieldValue(bean: gameInstance, field: "ratingValue")}</td>
                             
                         </tr>
-                    
+                        <tr class="prop">
+                            <td valign="top" class="name"><g:message code="game.publishedOn.label" default="Published On" /></td>
+                            
+                            <td valign="top" class="value"><g:formatDate date="${gameInstance?.publishedOn}" /></td>
+                            
+                        </tr>
+						
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="game.players.label" default="Players" /></td>
                             
@@ -100,19 +105,6 @@
                             
                         </tr>
                     
-                        <tr class="prop">
-                            <td valign="top" class="name"><g:message code="game.developer.label" default="Developer" /></td>
-                            
-                            <td valign="top" class="value"><g:link controller="company" action="show" id="${gameInstance?.developer?.id}">${gameInstance?.developer?.encodeAsHTML()}</g:link></td>
-                            
-                        </tr>
-                    
-                        <tr class="prop">
-                            <td valign="top" class="name"><g:message code="game.publisher.label" default="Publisher" /></td>
-                            
-                            <td valign="top" class="value"><g:link controller="company" action="show" id="${gameInstance?.publisher?.id}">${gameInstance?.publisher?.encodeAsHTML()}</g:link></td>
-                            
-                        </tr>
                     
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="game.wifiFeatures.label" default="Wifi Features" /></td>
