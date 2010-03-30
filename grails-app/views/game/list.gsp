@@ -39,6 +39,7 @@
 				  Region
 				  <g:select from="${de.arturh.wiidb.Game.list().region.unique()}" noSelection="${['':'']}" name="region" value="${params.region}"  />
 			  </NOBR>
+			  <br/>
 
 			  <NOBR>
 				  With <g:link action="list" controller="device">Device</g:link>
@@ -61,7 +62,8 @@
             </g:form>
 
             <div class="list">
-                showing ${gameInstanceList.size()} of ${gameInstanceTotal} games<br/>
+			<br/>
+                showing ${gameInstanceList.size()} of ${gameInstanceTotal} games<br/><br/>
                 <g:each in="${gameInstanceList}" status="i" var="gameInstance">
                 <table>
                     <tbody>

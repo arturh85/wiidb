@@ -162,22 +162,15 @@
                                 </g:each>
                                 </ul>
                             </td>
-                            
                         </tr>
                     
                         <tr class="prop">
-                            <td valign="top" class="name"><g:message code="game.ratings.label" default="Ratings" /></td>
+                            <td valign="top" class="name">Resources</td>
                             
                             <td valign="top" style="text-align: left;" class="value">
-                                <ul>
-                                <g:each in="${gameInstance.ratings}" var="r">
-                                    <li><g:link controller="rating" action="show" id="${r.id}">${r?.encodeAsHTML()}</g:link></li>
-                                </g:each>
-                                </ul>
-                            </td>
-                            
-                        </tr>
-                    
+                                <a href="http://wiitdb.com/Game/${gameInstance.wiiId}">WiiTDB</a>
+                            </td>                            
+                        </tr>                    
                     </tbody>
                 </table>
             </div>
