@@ -72,7 +72,6 @@ class GameController {
 					eq('name', params.inCollection)
 				}
 			}
-
 			order(paramSort, paramOrder)
 		}
 		
@@ -86,6 +85,11 @@ class GameController {
 					eq('id', params.genre.toLong())
 				}
 			}
+
+			if(params.region) {
+				eq('region', params.region)
+			}
+
 			if(params.withDevice) {
 				devices {
 					eq('deviceType', params.withDevice)
@@ -110,13 +114,13 @@ class GameController {
 					ilike('name', "%${params.filter}%")
 					ilike('synopsis', "%${params.filter}%")
 				}
-			}				
+			}
 			
 			if(params.inCollection) {
 				gameCollections {
 					eq('name', params.inCollection)
 				}
-			}	
+			}
 		}
         
         [
@@ -210,20 +214,6 @@ class GameController {
         }
     }
 	
-	def download(url)
-	{
-		def whatever = url.tokenize("/")[-1]
-		
-		println "whatever: " + whatever
-		def file = new FileOutputStream(whatever)
-		println "file: " + file
-		def out = new BufferedOutputStream(file)
-		out << new URL(url).openStream()
-		out.close()
-		
-		out
-	}
-		
 	def image = {
 		String tempDirectory = 
 			System.getProperty("java.io.tmpdir") + "/wiidb"	
@@ -235,37 +225,47 @@ class GameController {
 				LOG.error "error creating temp directory at: " + tempDirectory
 				return null
 			}
-		}		
+		}
 	
-		def coverFilename = tempDirectory + "/" + params.id + ".png"
-		def cover3d = "http://wiitdb.com/wiitdb/artwork/cover3D/EN/${params.id}.png"
-		def cover2d = "http://wiitdb.com/wiitdb/artwork/cover/EN/${params.id}.png"
+		def game = Game.findByWiiId(params.id)
+		
+		if(!game) {
+			return
+		}
+		
+		def language = null
+		game.languages.code.each { 
+			if(language == null || language != "EN") {
+				language = it
+			}
+		}
+		
+		if(language == null) {
+			language = "EN"
+		}
+	
+		def coverPath = tempDirectory + "/" + params.id + ".png"
 
-		def file = new File(coverFilename)
+		def file = new File(coverPath)
 		
-		if(!file.exists()) {
-			println "downloading cover from: " + cover3d
-			use (FileBinaryCategory) 
-			{
-				try {
-					file << cover3d.toURL()
-				} catch(Exception e) {
-					file.delete()
-				}
-			}
+		if(file.exists()) {
+			//println "using existing cover from: " + coverPath
 		}
 		
-		if(!file.exists()) {
-			println "downloading cover from: " + cover2d
-			use (FileBinaryCategory) 
-			{
-				try {
-					file << cover2d.toURL()
-				} catch(Exception e) {
-					file.delete()
+		else {
+			_downloadCover(file, language, params.id, true)
+
+			if(!file.exists()) {
+				if(language != "EN") {
+					_downloadCover(file, "EN", params.id, true)
 				}
+				_downloadCover(file, "US", params.id, true)
+				_downloadCover(file, "KO", params.id, true)
 			}
+			
+			_downloadCover(file, language, params.id, false)
 		}
+
 		
 		if(file.exists() && file.length() > 0) {
 			response.setHeader("Content-type", "image/png");
@@ -275,6 +275,26 @@ class GameController {
 		}
 	}
 	
+	def _downloadCover(File file, String language, String wiiId, Boolean cover3d) {
+		def coverUrl = "http://wiitdb.com/wiitdb/artwork/cover" + (cover3d ? "3D" : "") + "/${language}/${wiiId}.png"
+
+		if(file.exists()) {
+			return
+		}
+		
+		use (FileBinaryCategory) 
+		{
+			try {
+				file << coverUrl.toURL()
+			} catch(Exception e) {
+				file.delete()
+			}
+		}
+
+		def success = file.exists()
+		println "downloading cover from: " + coverUrl + " ... " + (success ? "success" : "failed")
+		return success
+	}	
 }
 
 class FileBinaryCategory

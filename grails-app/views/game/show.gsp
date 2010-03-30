@@ -18,6 +18,7 @@
             <g:if test="${flash.message}">
             <div class="message">${flash.message}</div>
             </g:if>
+			<img border="0" style="float: right;" src="/WiiDB/game/image/${gameInstance.wiiId}" alt="${gameInstance.wiiId}" />
             <div class="dialog">
                 <table>
                     <tbody>
@@ -60,7 +61,7 @@
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="game.synopsis.label" default="Synopsis" /></td>
                             
-                            <td valign="top" class="value">${fieldValue(bean: gameInstance, field: "synopsis")}</td>
+                            <td valign="top" class="value"><div style="width: 400px">${fieldValue(bean: gameInstance, field: "synopsis")}</div></td>
                             
                         </tr>
                     

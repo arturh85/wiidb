@@ -55,7 +55,7 @@
 				  In <g:link action="list" controller="gameCollection">Collection</g:link>
 				  <g:select from="${de.arturh.wiidb.GameCollection.list().name.unique()}" noSelection="${['':'']}" name="inCollection" value="${params.inCollection}"  />
 			  </NOBR>
-
+			  
               <g:actionSubmit action="list" value="update" label="Update" />
             </div>
 
@@ -75,7 +75,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td width="60"><img src="/WiiDB/game/image/${gameInstance.wiiId}" alt="${gameInstance.wiiId}" width="50" /></td>
+                            <td width="60"><g:link action="show" id="${gameInstance.id}"><img border="0" src="/WiiDB/game/image/${gameInstance.wiiId}" alt="${gameInstance.wiiId}" width="80" /></g:link></td>
                             <td>${fieldValue(bean: gameInstance, field: "synopsis")}</td>
                             <td width="200">
                               <strong>region:</strong> ${fieldValue(bean: gameInstance, field: "region")}<br/>
@@ -100,7 +100,7 @@
                 </g:each>
             </div>
             <div class="paginateButtons">
-                <g:paginate total="${gameInstanceTotal}" params="[genre: params.genre, minPlayers: params.minPlayers, withDevice: params.withDevice, withoutDevice: params.withoutDevice, region: params.region, filter:params.filter]" />
+                <g:paginate total="${gameInstanceTotal}" params="[genre: params.genre, minPlayers: params.minPlayers, withDevice: params.withDevice, withoutDevice: params.withoutDevice, region: params.region, filter:params.filter, inCollection: params.inCollection, notInCollection: params.notInCollection]" />
             </div>
         </div>
     </body>
