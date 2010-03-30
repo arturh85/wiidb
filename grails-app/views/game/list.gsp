@@ -20,23 +20,40 @@
 
             <g:form method="get">
             <div class="filters">
-              Filter
-              <g:textField name="filter" value="${params.filter}" />
-
-              Min. Players 
-              <g:select from="['1', '2', '3', '4']" noSelection="${['':'']}" name="minPlayers" value="${params.minPlayers}" />
+			  <NOBR>
+				  Filter
+				  <g:textField name="filter" value="${params.filter}" />
+			  </NOBR>
+			  
+			  <NOBR>
+				  Min. Players 
+				  <g:select from="['1', '2', '3', '4']" noSelection="${['':'']}" name="minPlayers" value="${params.minPlayers}" />
+			  </NOBR>
               
-              Genre
-              <g:select from="${de.arturh.wiidb.Genre.list()}" noSelection="${['':'']}" name="genre" value="${params.genre}" optionKey="id" />
+			  <NOBR>
+				  <g:link action="list" controller="genre">Genre</g:link>
+				  <g:select from="${de.arturh.wiidb.Genre.list()}" noSelection="${['':'']}" name="genre" value="${params.genre}" optionKey="id" />
+			  </NOBR>
 
-              Region
-              <g:select from="${de.arturh.wiidb.Game.list().region.unique()}" noSelection="${['':'']}" name="region" value="${params.region}"  />
+			  <NOBR>
+				  Region
+				  <g:select from="${de.arturh.wiidb.Game.list().region.unique()}" noSelection="${['':'']}" name="region" value="${params.region}"  />
+			  </NOBR>
 
-              With Device
-              <g:select from="${de.arturh.wiidb.Device.list().deviceType.unique()}" noSelection="${['':'']}" name="withDevice" value="${params.withDevice}"  />
+			  <NOBR>
+				  With <g:link action="list" controller="device">Device</g:link>
+				  <g:select from="${de.arturh.wiidb.Device.list().deviceType.unique()}" noSelection="${['':'']}" name="withDevice" value="${params.withDevice}"  />
+			  </NOBR>
 
-              Without Device
-              <g:select from="${de.arturh.wiidb.Device.list().deviceType.unique()}" noSelection="${['':'']}" name="withoutDevice" value="${params.withoutDevice}"  />
+			  <NOBR>
+				  Without <g:link action="list" controller="device">Device</g:link>
+				  <g:select from="${de.arturh.wiidb.Device.list().deviceType.unique()}" noSelection="${['':'']}" name="withoutDevice" value="${params.withoutDevice}"  />
+			  </NOBR>
+
+			  <NOBR>
+				  In <g:link action="list" controller="gameCollection">Collection</g:link>
+				  <g:select from="${de.arturh.wiidb.GameCollection.list().name.unique()}" noSelection="${['':'']}" name="inCollection" value="${params.inCollection}"  />
+			  </NOBR>
 
               <g:actionSubmit action="list" value="update" label="Update" />
             </div>
@@ -62,7 +79,14 @@
                               <strong>region:</strong> ${fieldValue(bean: gameInstance, field: "region")}<br/>
                               <strong>genres:</strong> ${formatList(list: gameInstance.genres.name)}<br/>
                               <strong>players <g:if test="${gameInstance.playersWifi && gameInstance.playersWifi > 0}">(wifi)</g:if>:</strong> ${fieldValue(bean: gameInstance, field: "players")} <g:if test="${gameInstance.playersWifi && gameInstance.playersWifi > 0}">(${gameInstance.playersWifi} )</g:if><br/>
-                              <strong>devices:</strong> ${formatList(list: gameInstance.devices)}<br/>
+
+                              <g:if test="${gameInstance.devices.size()}">
+								<strong>devices:</strong> ${formatList(list: gameInstance.devices)}<br/>
+							  </g:if>
+
+                              <g:if test="${gameInstance.gameCollections.size()}">
+								<strong>in collections:</strong> ${formatList(list: gameInstance.gameCollections)}<br/>
+							  </g:if>
 
                             </td>
                         </tr>

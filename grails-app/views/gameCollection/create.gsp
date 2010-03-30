@@ -22,7 +22,7 @@
                 <g:renderErrors bean="${gameCollectionInstance}" as="list" />
             </div>
             </g:hasErrors>
-            <g:form action="save" method="post" >
+            <g:form action="save" method="post" enctype="multipart/form-data">
                 <div class="dialog">
                     <table>
                         <tbody>
@@ -35,6 +35,16 @@
                                     <g:textField name="name" value="${gameCollectionInstance?.name}" />
                                 </td>
                             </tr>
+							
+
+                            <tr class="prop">
+                                <td valign="top" class="name">
+                                    <label for="name">WiiBackupManager Selection File</label>
+                                </td>
+                                <td valign="top" class="value">
+                                    <input type="file" name="selectionFile" />
+                                </td>
+                            </tr>							
                         
                         </tbody>
                     </table>

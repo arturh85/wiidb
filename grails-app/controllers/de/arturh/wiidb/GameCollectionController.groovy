@@ -21,6 +21,24 @@ class GameCollectionController {
 
     def save = {
         def gameCollectionInstance = new GameCollection(params)
+
+		def selections = request.getFile("selectionFile").inputStream.text
+		
+		selections.split("\n").each {
+			it = it.trim()
+			if(it.length() == 6) {
+				def game = Game.findByWiiId(it)
+				
+				if(game) {
+					gameCollectionInstance.addToGames(game)
+				} else {
+					println "game not found: " + it
+				}
+			} else {
+				println "wrong length: '${it}'"
+			}
+		}
+		
         if (gameCollectionInstance.save(flush: true)) {
             flash.message = "${message(code: 'default.created.message', args: [message(code: 'gameCollection.label', default: 'GameCollection'), gameCollectionInstance.id])}"
             redirect(action: "show", id: gameCollectionInstance.id)

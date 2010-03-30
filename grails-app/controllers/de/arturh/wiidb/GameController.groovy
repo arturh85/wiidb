@@ -27,84 +27,96 @@ class GameController {
 		}
 		
 		def results = Game.createCriteria().list(offset: paramOffset, max: paramMax) {
-                    if(params.minPlayers) {
-                        ge('players', params.minPlayers.toInteger())
-                    }
+			if(params.minPlayers) {
+				ge('players', params.minPlayers.toInteger())
+			}
 
-                    if(params.genre) {
-                        genres {
-                            eq('id', params.genre.toLong())
-                        }
-                    }
+			if(params.genre) {
+				genres {
+					eq('id', params.genre.toLong())
+				}
+			}
 
-                    if(params.region) {
-                        eq('region', params.region)
-                    }
+			if(params.region) {
+				eq('region', params.region)
+			}
 
-                    if(params.withDevice) {
-                        devices {
-                            eq('deviceType', params.withDevice)
-                        }
-                    }
+			if(params.withDevice) {
+				devices {
+					eq('deviceType', params.withDevice)
+				}
+			}
 
-                    if(params.withoutDevice) {
-                        devices {
-                            or {
-                                and {
-                                    eq('deviceType', params.withoutDevice)
-                                    eq('required', false)
-                                }
+			if(params.withoutDevice) {
+				devices {
+					or {
+						and {
+							eq('deviceType', params.withoutDevice)
+							eq('required', false)
+						}
 
-                                ne('deviceType', params.withoutDevice)
-                            }
-                        }
-                    }
+						ne('deviceType', params.withoutDevice)
+					}
+				}
+			}
 
-                    if(params.filter) {
-                        or {
-                            ilike('name', "%${params.filter}%")
-                            ilike('synopsis', "%${params.filter}%")
-                        }
-                    }
+			if(params.filter) {
+				or {
+					ilike('name', "%${params.filter}%")
+					ilike('synopsis', "%${params.filter}%")
+				}
+			}
+			
+			if(params.inCollection) {
+				gameCollections {
+					eq('name', params.inCollection)
+				}
+			}
 
-                    order(paramSort, paramOrder)
+			order(paramSort, paramOrder)
 		}
 		
 		def resultCount = Game.createCriteria().count {
-                    if(params.minPlayers) {
-                        ge('players', params.minPlayers.toInteger())
-                    }
+			if(params.minPlayers) {
+				ge('players', params.minPlayers.toInteger())
+			}
 
-                    if(params.genre) {
-                        genres {
-                            eq('id', params.genre.toLong())
-                        }
-                    }
-                    if(params.withDevice) {
-                        devices {
-                            eq('deviceType', params.withDevice)
-                        }
-                    }
+			if(params.genre) {
+				genres {
+					eq('id', params.genre.toLong())
+				}
+			}
+			if(params.withDevice) {
+				devices {
+					eq('deviceType', params.withDevice)
+				}
+			}
 
-                    if(params.withoutDevice) {
-                        devices {
-                            or {
-                                and {
-                                    eq('deviceType', params.withoutDevice)
-                                    eq('required', false)
-                                }
+			if(params.withoutDevice) {
+				devices {
+					or {
+						and {
+							eq('deviceType', params.withoutDevice)
+							eq('required', false)
+						}
 
-                                ne('deviceType', params.withoutDevice)
-                            }
-                        }
-                    }
+						ne('deviceType', params.withoutDevice)
+					}
+				}
+			}
 
-                    if(params.filter) {
-                        or {
-                            ilike('name', "%${params.filter}%")
-                            ilike('synopsis', "%${params.filter}%")
-                        }
-                    }					
+			if(params.filter) {
+				or {
+					ilike('name', "%${params.filter}%")
+					ilike('synopsis', "%${params.filter}%")
+				}
+			}				
+			
+			if(params.inCollection) {
+				gameCollections {
+					eq('name', params.inCollection)
+				}
+			}	
 		}
         
         [

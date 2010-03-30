@@ -1,7 +1,7 @@
 package de.arturh.wiidb
 
 class Game {
-	static searchable = true
+	//static searchable = true
 	
     static hasMany = [
       // many-to-many
@@ -35,7 +35,7 @@ class Game {
 	Set<WifiFeature> wifiFeatures
 	Set<Genre> genres
 	Set<Rating> ratings
-	Set<GameCollecton> gameCollections
+	Set<GameCollection> gameCollections
 	Set<Device> devices
 
 	String toString() {

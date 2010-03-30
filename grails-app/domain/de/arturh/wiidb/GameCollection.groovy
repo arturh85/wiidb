@@ -4,7 +4,7 @@ class GameCollection {
 	def belongsTo = Game
     static hasMany = [
 	  // many-to-many
-	  games: Game,
+	  games: Game
 	]
         	
     Long id
