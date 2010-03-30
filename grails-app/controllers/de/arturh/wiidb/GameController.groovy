@@ -25,8 +25,8 @@ class GameController {
 		if(params['offset']) {
 			paramOffset = params['offset']
 		}
-
-		def results = Game.createCriteria().list(offset: paramOffset) {
+		
+		def results = Game.createCriteria().list(offset: paramOffset, max: paramMax) {
                     if(params.minPlayers) {
                         ge('players', params.minPlayers.toInteger())
                     }
@@ -67,7 +67,6 @@ class GameController {
                         }
                     }
 
-                    maxResults(paramMax)
                     order(paramSort, paramOrder)
 		}
 		
@@ -105,11 +104,9 @@ class GameController {
                             ilike('name', "%${params.filter}%")
                             ilike('synopsis', "%${params.filter}%")
                         }
-                    }
-					
+                    }					
 		}
         
-    	params.max = Math.min(params.max ? params.int('max') : 10, 100)
         [
          gameInstanceList: results, 
          gameInstanceTotal: resultCount
@@ -200,4 +197,93 @@ class GameController {
             redirect(action: "list")
         }
     }
+	
+	def download(url)
+	{
+		def whatever = url.tokenize("/")[-1]
+		
+		println "whatever: " + whatever
+		def file = new FileOutputStream(whatever)
+		println "file: " + file
+		def out = new BufferedOutputStream(file)
+		out << new URL(url).openStream()
+		out.close()
+		
+		out
+	}
+		
+	def image = {
+		String tempDirectory = 
+			System.getProperty("java.io.tmpdir") + "/wiidb"	
+			
+		def tempDirectoryFile = new File(tempDirectory)
+		
+		if(!tempDirectoryFile.exists()) {
+			if(!tempDirectoryFile.mkdir()) {
+				LOG.error "error creating temp directory at: " + tempDirectory
+				return null
+			}
+		}		
+	
+		def coverFilename = tempDirectory + "/" + params.id + ".png"
+		def cover3d = "http://wiitdb.com/wiitdb/artwork/cover3D/EN/${params.id}.png"
+		def cover2d = "http://wiitdb.com/wiitdb/artwork/cover/EN/${params.id}.png"
+
+		def file = new File(coverFilename)
+		
+		if(!file.exists()) {
+			println "downloading cover from: " + cover3d
+			use (FileBinaryCategory) 
+			{
+				try {
+					file << cover3d.toURL()
+				} catch(Exception e) {
+					file.delete()
+				}
+			}
+		}
+		
+		if(!file.exists()) {
+			println "downloading cover from: " + cover2d
+			use (FileBinaryCategory) 
+			{
+				try {
+					file << cover2d.toURL()
+				} catch(Exception e) {
+					file.delete()
+				}
+			}
+		}
+		
+		if(file.exists() && file.length() > 0) {
+			response.setHeader("Content-type", "image/png");
+			response.outputStream << new FileInputStream(file)
+		} else {
+			response.outputStream << "file not found"
+		}
+	}
+	
 }
+
+class FileBinaryCategory
+{
+  def static leftShift(File a_file, URL a_url)
+  {
+    def input
+    def output
+
+    try
+    {
+      input = a_url.openStream()
+      output = new BufferedOutputStream(new FileOutputStream(a_file))
+
+      output << input
+    }
+    finally
+    {
+       input?.close()
+       output?.close()
+    }
+  }
+}
+

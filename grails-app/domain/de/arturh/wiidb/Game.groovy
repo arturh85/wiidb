@@ -10,6 +10,7 @@ class Game {
       devices: Device,
       ratings: Rating,
       wifiFeatures: WifiFeature,
+      gameCollections: GameCollection,
     ]
 
 	Long id
@@ -34,6 +35,7 @@ class Game {
 	Set<WifiFeature> wifiFeatures
 	Set<Genre> genres
 	Set<Rating> ratings
+	Set<GameCollecton> gameCollections
 	Set<Device> devices
 
 	String toString() {
@@ -71,6 +73,7 @@ class Game {
         wifiFeatures         joinTable:[name: 'gamesToWifiFeatures', key: 'gameId']
         genres               joinTable:[name: 'gamesToGenres', key: 'gameId']
         devices       		 joinTable:[name: 'gamesToDevices', key: 'gameId']
-        ratings       		 joinTable:[name: 'gamesToRatings', key: 'gameId']                      		            
+        ratings       		 joinTable:[name: 'gamesToRatings', key: 'gameId']        
+        gameCollections		 joinTable:[name: 'gamesToGameCollections', key: 'gameId']                   		            
 	}
 }

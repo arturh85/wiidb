@@ -44,7 +44,7 @@
             </g:form>
 
             <div class="list">
-                ${gameInstanceTotal} games:
+                showing ${gameInstanceList.size()} of ${gameInstanceTotal} games<br/>
                 <g:each in="${gameInstanceList}" status="i" var="gameInstance">
                 <table>
                     <tbody>
@@ -56,7 +56,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td width="60"><img src="http://wiitdb.com/wiitdb/artwork/cover3D/EN/${gameInstance.wiiId}.png" alt="${gameInstance.wiiId}" width="50" /></td>
+                            <td width="60"><img src="/WiiDB/game/image/${gameInstance.wiiId}" alt="${gameInstance.wiiId}" width="50" /></td>
                             <td>${fieldValue(bean: gameInstance, field: "synopsis")}</td>
                             <td width="200">
                               <strong>region:</strong> ${fieldValue(bean: gameInstance, field: "region")}<br/>
