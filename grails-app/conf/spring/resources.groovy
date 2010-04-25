@@ -1,3 +1,5 @@
+import org.apache.commons.dbcp.BasicDataSource
+
 // Place your Spring DSL code here
 beans = {
     dataSource(BasicDataSource) {
