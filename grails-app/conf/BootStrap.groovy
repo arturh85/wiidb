@@ -21,19 +21,24 @@ class BootStrap {
 			println "db property: " + it 
 		}
 	 
-     	def games = Game.list()
-		
-		// only import game list when starting up with an empty database
-     	if(games.size() == 0) {
-			def catalinaBase = System.properties.getProperty('catalina.base')
-			def path = "web-app/wiitdb.xml"
-			if (catalinaBase) { // if running in grails run-app mode
-				path = "webapps/WiiDB/wiitdb.xml"
-			}		
-		
-		 	WiiTdbImporter importer = new WiiTdbImporter()
-			importer.importWiiTdb(path)
-     	}
+        switch (GrailsUtil.environment) {
+			case "production":
+				def games = Game.list()
+				
+				// only import game list when starting up with an empty database
+				if(games.size() == 0) {
+					def catalinaBase = System.properties.getProperty('catalina.base')
+					def path = "web-app/wiitdb.xml"
+					if (catalinaBase) { // if running in grails run-app mode
+						path = "webapps/WiiDB/wiitdb.xml"
+					}		
+				
+					WiiTdbImporter importer = new WiiTdbImporter()
+					importer.importWiiTdb(path)
+				}
+
+                break
+        } 
      }
      def destroy = {
      }
