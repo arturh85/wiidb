@@ -1,6 +1,7 @@
 import de.arturh.wiidb.WiiTdbImporter;
 import org.codehaus.groovy.grails.commons.ApplicationAttributes
 import de.arturh.wiidb.Game
+import grails.util.GrailsUtil
 
 class BootStrap {
      def init = { servletContext ->
