@@ -31,7 +31,7 @@ class BootStrap {
 					def catalinaBase = System.properties.getProperty('catalina.base')
 					def path = "web-app/wiitdb.xml"
 					if (catalinaBase) { // if running in grails run-app mode
-						path = "webapps/WiiDB/wiitdb.xml"
+						path = catalineBase + "webapps/WiiDB/wiitdb.xml"
 					}		
 				
 					WiiTdbImporter importer = new WiiTdbImporter()
