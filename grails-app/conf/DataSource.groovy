@@ -29,7 +29,10 @@ environments {
 	production {
 		dataSource {
 			dbCreate = "update"
-			url = "jdbc:hsqldb:file:prodDb;shutdown=true"
+			url = "jdbc:mysql://localhost/wiidb"
+			driverClassName = "com.mysql.jdbc.Driver"
+			username = "wiidb"
+			password = "qRvetWe7dwB3sLLv"
 		}
 	}
 }
