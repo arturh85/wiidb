@@ -1,13 +1,17 @@
 WiiDB
 =====
 
-Wii Title Database as a single searchable HTML page
+Wii TDB as a single searchable HTML page
 
 ### Framework:
 * http://angularjs.org/  
 
 Credits
 -------
+
+### TDB
+* http://www.gametdb.com
+* [Download wiitdb.zip, titles.txt and Covers](http://www.gametdb.com/Wii/Downloads)
 
 ### Libraries:
 * http://jquery.com/
