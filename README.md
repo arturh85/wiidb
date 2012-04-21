@@ -2,6 +2,9 @@ WiiDB
 =====
 
 Wii TDB as a single searchable HTML page
+ - Searchable
+ - Use the [cloud server](#todo) or host your own instance
+ - Open Source Software under MIT license
 
 ### Framework:
 * http://angularjs.org/  

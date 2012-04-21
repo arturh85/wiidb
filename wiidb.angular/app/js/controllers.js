@@ -2,10 +2,10 @@
 /* App Controllers */
 
 
-function MyCtrl1() {}
-MyCtrl1.$inject = [];
+function TDBController($scope) {}
+TDBController.$inject = ["$scope"];
 
 
-function MyCtrl2() {
+function DummyController($scope) {
 }
-MyCtrl2.$inject = [];
+DummyController.$inject = ["$scope"];

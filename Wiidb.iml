@@ -2,8 +2,10 @@
 <module type="JAVA_MODULE" version="4">
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
+    <content url="file://$MODULE_DIR$/../angular-phonecat" />
     <content url="file://$MODULE_DIR$">
-      <sourceFolder url="file://$MODULE_DIR$" isTestSource="false" packagePrefix="de.arturh.wiidb" />
+      <sourceFolder url="file://$MODULE_DIR$/wiidb.angular/app" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/wiidb.angular/test" isTestSource="true" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

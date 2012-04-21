@@ -1,7 +1,7 @@
 /* jasmine specs for services go here */
 
 describe('service', function() {
-  beforeEach(module('myApp.services'));
+  beforeEach(module('wiidb.services'));
 
 
   describe('version', function() {
