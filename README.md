@@ -19,4 +19,4 @@ Credits
 ### Libraries:
 * http://jquery.com/
 * http://heartcode.robertpataki.com/canvasloader/  
-* http://pivotal.github.com/jasmine/
+* https://jasmine.github.io/
